@@ -20,7 +20,7 @@ export default function CafePulseLogo({ className = '' }) {
           <line x1="14" y1="2" x2="14" y2="4" />
         </svg>
       </div>
-      <span className="font-serif font-bold text-xl tracking-tight text-[#FAF3EB] dark:text-[#FAF3EB] flex items-baseline">
+      <span className="font-serif font-bold text-xl tracking-tight text-[#2D1B11] dark:text-[#FAF3EB] flex items-baseline">
         CafePulse<span className="text-[#DE7938] font-sans text-2xl font-black">.</span>
       </span>
     </div>

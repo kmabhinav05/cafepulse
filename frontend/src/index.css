@@ -9,6 +9,15 @@
 
   body {
     overflow-x: hidden;
+    color: #2D1B11;
+    background-color: #F7EFE4;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .dark body,
+  body.dark,
+  .dark {
+    color: #FAF3EB;
   }
 }
 

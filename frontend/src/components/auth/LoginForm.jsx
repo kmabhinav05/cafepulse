@@ -88,20 +88,20 @@ export default function LoginForm({ className = '' }) {
     >
       {/* Header section matching target reference screenshot */}
       <div className="space-y-1 mb-6">
-        <span className="block text-[11px] font-semibold uppercase tracking-widest text-[#DE7938]">
+        <span className="block text-[11px] font-semibold uppercase tracking-widest text-[#C46022] dark:text-[#DE7938]">
           YOUR CAFE, CONNECTED
         </span>
-        <h2 className="font-serif text-[36px] sm:text-[38px] font-extrabold text-[#FAF3EB] tracking-tight leading-[1.12]">
+        <h2 className="font-serif text-[36px] sm:text-[38px] font-extrabold text-[#2D1B11] dark:text-[#FAF3EB] tracking-tight leading-[1.12]">
           Welcome back
         </h2>
-        <p className="text-[14.5px] text-[#A89B91] pt-0.5">
+        <p className="text-[14.5px] text-[#695548] dark:text-[#A89B91] pt-0.5">
           Good things are brewing.
         </p>
       </div>
 
       {/* API Error Notification */}
       {apiError && (
-        <div className="mb-4 p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium animate-fade-in">
+        <div className="mb-4 p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs font-medium animate-fade-in">
           {apiError}
         </div>
       )}
@@ -112,7 +112,7 @@ export default function LoginForm({ className = '' }) {
         <div className="space-y-1.5">
           <label
             htmlFor="login-email"
-            className="block text-xs font-medium text-[#C9BEB5] pl-1"
+            className="block text-xs font-medium text-[#4D382B] dark:text-[#C9BEB5] pl-1"
           >
             Email
           </label>
@@ -123,13 +123,13 @@ export default function LoginForm({ className = '' }) {
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full h-[48px] px-5 rounded-2xl text-sm font-medium transition-all duration-200 bg-[#241710]/75 dark:bg-[#22160F]/80 text-[#FAF3EB] border border-[#3E291C]/60 shadow-inner focus:outline-none focus:ring-1 focus:ring-[#DCA466]/40 focus:border-[#DCA466] ${
+              className={`w-full h-[48px] px-5 rounded-2xl text-sm font-medium transition-all duration-200 bg-white/70 dark:bg-[#22160F]/80 text-[#2D1B11] dark:text-[#FAF3EB] border border-[#D8C7B8] dark:border-[#3E291C]/60 shadow-inner focus:outline-none focus:ring-1 focus:ring-[#DCA466]/40 focus:border-[#DCA466] placeholder-[#9E8B7E] dark:placeholder-[#6C5B50] ${
                 errors.email ? 'border-red-400' : ''
               }`}
             />
           </div>
           {errors.email && (
-            <p className="text-xs text-red-400 pl-3 pt-0.5">{errors.email}</p>
+            <p className="text-xs text-red-500 dark:text-red-400 pl-3 pt-0.5">{errors.email}</p>
           )}
         </div>
 
@@ -137,7 +137,7 @@ export default function LoginForm({ className = '' }) {
         <div className="space-y-1.5">
           <label
             htmlFor="login-password"
-            className="block text-xs font-medium text-[#C9BEB5] pl-1"
+            className="block text-xs font-medium text-[#4D382B] dark:text-[#C9BEB5] pl-1"
           >
             Password
           </label>
@@ -148,21 +148,21 @@ export default function LoginForm({ className = '' }) {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full h-[48px] px-5 pr-12 rounded-2xl text-sm font-medium transition-all duration-200 bg-[#241710]/75 dark:bg-[#22160F]/80 text-[#FAF3EB] border border-[#3E291C]/60 shadow-inner focus:outline-none focus:ring-1 focus:ring-[#DCA466]/40 focus:border-[#DCA466] ${
+              className={`w-full h-[48px] px-5 pr-12 rounded-2xl text-sm font-medium transition-all duration-200 bg-white/70 dark:bg-[#22160F]/80 text-[#2D1B11] dark:text-[#FAF3EB] border border-[#D8C7B8] dark:border-[#3E291C]/60 shadow-inner focus:outline-none focus:ring-1 focus:ring-[#DCA466]/40 focus:border-[#DCA466] placeholder-[#9E8B7E] dark:placeholder-[#6C5B50] ${
                 errors.password ? 'border-red-400' : ''
               }`}
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 p-1.5 text-[#8A7D73] hover:text-[#FAF3EB] transition-colors focus:outline-none"
+              className="absolute right-4 p-1.5 text-[#695548] dark:text-[#8A7D73] hover:text-[#2D1B11] dark:hover:text-[#FAF3EB] transition-colors focus:outline-none"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
           </div>
           {errors.password && (
-            <p className="text-xs text-red-400 pl-3 pt-0.5">{errors.password}</p>
+            <p className="text-xs text-red-500 dark:text-red-400 pl-3 pt-0.5">{errors.password}</p>
           )}
         </div>
 
@@ -171,7 +171,7 @@ export default function LoginForm({ className = '' }) {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full h-[48px] rounded-full flex items-center justify-center gap-2 font-medium text-sm text-[#241409] bg-[#DCA466] hover:bg-[#E5AF73] active:scale-[0.99] transition-all duration-200 shadow-md shadow-[#DCA466]/20 disabled:opacity-50 cursor-pointer"
+            className="w-full h-[48px] rounded-full flex items-center justify-center gap-2 font-semibold text-sm text-[#241409] bg-[#DCA466] hover:bg-[#E5AF73] active:scale-[0.99] transition-all duration-200 shadow-md shadow-[#DCA466]/20 disabled:opacity-50 cursor-pointer"
           >
             {isLoading ? (
               <Loader2 className="w-4 h-4 animate-spin text-[#241409]" />
@@ -190,7 +190,7 @@ export default function LoginForm({ className = '' }) {
         <button
           type="button"
           onClick={handleQuickDemo}
-          className="text-xs text-[#8A7D74] hover:text-[#C9BEB5] transition-colors cursor-pointer"
+          className="text-xs text-[#7A695E] dark:text-[#8A7D74] hover:text-[#2D1B11] dark:hover:text-[#C9BEB5] transition-colors cursor-pointer"
           title="Click to fill demo account"
         >
           Accounts are created by your cafe admin.

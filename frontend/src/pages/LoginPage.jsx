@@ -51,13 +51,13 @@ export default function LoginPage() {
             transition={{ duration: 0.5, ease: 'easeOut' }}
             className="space-y-1"
           >
-            <span className="block text-xs sm:text-[12.5px] font-medium tracking-normal text-[#DE7938]">
+            <span className="block text-xs sm:text-[12.5px] font-medium tracking-normal text-[#C46022] dark:text-[#DE7938]">
               A little craft. A lot of care.
             </span>
-            <h1 className="font-serif text-5xl sm:text-[56px] font-extrabold tracking-tight text-[#FAF3EB] leading-[1.05]">
+            <h1 className="font-serif text-5xl sm:text-[56px] font-extrabold tracking-tight text-[#2D1B11] dark:text-[#FAF3EB] leading-[1.05]">
               CafePulse
             </h1>
-            <p className="text-sm sm:text-[15px] text-[#A89B91] pt-0.5">
+            <p className="text-sm sm:text-[15px] text-[#695548] dark:text-[#A89B91] pt-0.5">
               A fresh start for your cafe.
             </p>
           </motion.div>

@@ -139,7 +139,7 @@ export default function IngredientLabels({ beverageType = 'tea' }) {
                   y1={`${item.y1}%`}
                   x2={`${item.x2}%`}
                   y2={`${item.y2}%`}
-                  stroke="rgba(240, 230, 220, 0.28)"
+                  className="stroke-[#6C5648]/40 dark:stroke-[rgba(240,230,220,0.28)]"
                   strokeWidth="0.5"
                   strokeDasharray="none"
                 />
@@ -148,7 +148,7 @@ export default function IngredientLabels({ beverageType = 'tea' }) {
                   cx={`${item.x2}%`}
                   cy={`${item.y2}%`}
                   r="0.9"
-                  fill="rgba(250, 240, 230, 0.75)"
+                  className="fill-[#6C5648]/80 dark:fill-[rgba(250,240,230,0.75)]"
                 />
               </g>
             ))}
@@ -164,7 +164,7 @@ export default function IngredientLabels({ beverageType = 'tea' }) {
               className="absolute pointer-events-auto"
               style={item.badgeStyle}
             >
-              <div className="px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-[#271B14]/85 dark:bg-[#251912]/90 backdrop-blur-md border border-white/10 shadow-lg shadow-black/30 text-[11px] sm:text-[11.5px] font-normal text-[#EAE2D8] hover:text-white transition-colors cursor-default whitespace-nowrap">
+              <div className="px-3 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-white/80 dark:bg-[#251912]/90 backdrop-blur-md border border-[#D5C2B2]/60 dark:border-white/10 shadow-lg shadow-[#3B2A20]/10 dark:shadow-black/30 text-[11px] sm:text-[11.5px] font-medium text-[#3B2A20] dark:text-[#EAE2D8] hover:text-[#C46022] dark:hover:text-white transition-colors cursor-default whitespace-nowrap">
                 {item.name}
               </div>
             </motion.div>
