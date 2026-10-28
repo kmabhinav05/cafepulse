@@ -42,11 +42,7 @@ export default function LoginPage() {
       });
       navigate(user.role === 'admin' ? '/dashboard' : '/pos', { replace: true });
     } catch (err) {
-      const msg =
-        err.response?.data?.detail ||
-        (err.code === 'ERR_NETWORK'
-          ? 'Cannot reach backend server. Please verify API is running.'
-          : 'Email or password is incorrect');
+      const msg = err.message || 'Email or password is incorrect';
       setErrors({ form: msg });
       addToast({
         type: 'error',
