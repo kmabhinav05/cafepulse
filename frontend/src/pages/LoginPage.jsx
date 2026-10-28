@@ -1,95 +1,197 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import CafePulseLogo from '../components/layout/CafePulseLogo';
-import ThemeToggle from '../components/ui/ThemeToggle';
-import CafeGlass3D from '../components/coffee/CafeGlass3D';
-import IngredientLabels from '../components/coffee/IngredientLabels';
-import BeverageSwitcher from '../components/coffee/BeverageSwitcher';
-import LoginForm from '../components/auth/LoginForm';
+import { useNavigate } from 'react-router-dom';
+import { Coffee, ArrowRight, LoaderCircle, Sun, Moon } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { useToast } from '../context/ToastContext';
+import GlassInput, { GlassButton } from '../components/ui/LovableGlass';
+import LovableCafeGlass from '../components/coffee/LovableCafeGlass';
 
 export default function LoginPage() {
-  // Tea mode is the default target design
-  const [beverageType, setBeverageType] = useState('tea');
+  const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const { addToast } = useToast();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      newErrors.email = 'Enter a valid email address';
+    }
+    if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+
+    setIsLoading(true);
+    try {
+      const user = await login(email.trim(), password);
+      addToast({
+        type: 'success',
+        title: `Welcome back, ${user.full_name}!`,
+        message: 'Successfully signed in.',
+      });
+      navigate(user.role === 'admin' ? '/dashboard' : '/pos', { replace: true });
+    } catch (err) {
+      const msg =
+        err.response?.data?.detail ||
+        (err.code === 'ERR_NETWORK'
+          ? 'Cannot reach backend server. Please verify API is running.'
+          : 'Email or password is incorrect');
+      setErrors({ form: msg });
+      addToast({
+        type: 'error',
+        title: 'Sign In Failed',
+        message: msg,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Quick fill helper for demo accounts
+  const handleQuickDemo = () => {
+    if (!email || email === 'staff@cafepulse.demo') {
+      setEmail('admin@cafepulse.demo');
+      setPassword('admin123');
+    } else {
+      setEmail('staff@cafepulse.demo');
+      setPassword('staff123');
+    }
+    setErrors({});
+  };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden transition-colors duration-700 bg-[#F7EFE4] dark:bg-[#140D08] text-espresso-900 dark:text-[#FAF3EB]">
-      {/* ================================================================= */}
-      {/* 1. SOFT ATMOSPHERIC GRADIENTS MATCHING TARGET SCREENSHOT EXACTLY  */}
-      {/* ================================================================= */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-        {/* Left burnt-brown / copper glow behind branding and glass */}
-        <div className="absolute -top-[8%] left-[2%] w-[56vw] h-[56vw] max-w-[760px] max-h-[760px] rounded-full bg-gradient-to-br from-[#F8C4A9]/70 via-[#F7BA9C]/45 to-transparent blur-[120px] dark:from-[#4E2412]/85 dark:via-[#351608]/60 transition-colors duration-700" />
-
-        {/* Center luminous depth glow */}
-        <div className="absolute top-[8%] left-[20%] w-[45vw] h-[45vw] max-w-[620px] max-h-[620px] rounded-full bg-gradient-to-b from-[#FFFDF9]/50 to-transparent blur-[120px] dark:from-[#26150C]/45 dark:via-transparent transition-colors duration-700" />
-
-        {/* Right & bottom-right subtle muted olive-green / forest mist */}
-        <div className="absolute top-[16%] -right-[8%] w-[54vw] h-[64vw] max-w-[800px] max-h-[900px] rounded-full bg-gradient-to-bl from-[#D8E7D5]/70 via-[#C9DDC6]/40 to-transparent blur-[130px] dark:from-[#1D2C1A]/55 dark:via-[#131F11]/35 transition-colors duration-700" />
-
-        {/* Bottom subtle warm ember glow */}
-        <div className="absolute -bottom-[14%] left-[24%] w-[44vw] h-[44vw] max-w-[620px] max-h-[620px] rounded-full bg-gradient-to-tr from-[#EEDAC7]/50 to-transparent blur-[100px] dark:from-[#2A1509]/50 transition-colors duration-700" />
+    <div className="login-page relative select-none">
+      {/* Background Animated Mesh Gradients matching Lovable */}
+      <div className="mesh-bg" aria-hidden="true">
+        <div className="mesh-blob b1" />
+        <div className="mesh-blob b2" />
+        <div className="mesh-blob b3" />
+        <div className="mesh-blob b4" />
       </div>
 
-      {/* ================================================================= */}
-      {/* 2. TOPBAR HEADER (LOGO AT TOP-LEFT, THEME TOGGLE AT TOP-RIGHT)    */}
-      {/* ================================================================= */}
-      <header className="relative z-20 w-full max-w-[1284px] mx-auto px-8 sm:px-12 pt-6 sm:pt-7 flex items-center justify-between">
-        <CafePulseLogo />
-        <ThemeToggle />
+      {/* Header */}
+      <header className="login-header">
+        <div className="flex items-center gap-2.5">
+          <Coffee className="size-6 text-accent" />
+          <span className="text-lg font-semibold tracking-tight text-foreground">
+            CafePulse<span className="text-accent font-bold">.</span>
+          </span>
+        </div>
+
+        <GlassButton
+          variant="glass"
+          size="icon"
+          onClick={toggleTheme}
+          aria-label={theme === 'dark' ? 'Use light theme' : 'Use dark theme'}
+          title={theme === 'dark' ? 'Use light theme' : 'Use dark theme'}
+        >
+          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+        </GlassButton>
       </header>
 
-      {/* ================================================================= */}
-      {/* 3. BALANCED 2-COLUMN LAYOUT MATCHING TARGET PROPORTIONS           */}
-      {/* ================================================================= */}
-      <main className="relative z-10 flex-1 w-full max-w-[1284px] mx-auto px-8 sm:px-12 py-3 sm:py-4 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-        {/* LEFT SECTION: Upper Branding + Compact 3D Glass + Controls Below */}
-        <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-1 sm:space-y-2">
-          {/* Branding and Tagline in upper-left area */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="space-y-1"
-          >
-            <span className="block text-xs sm:text-[12.5px] font-medium tracking-normal text-[#C46022] dark:text-[#DE7938]">
-              A little craft. A lot of care.
-            </span>
-            <h1 className="font-serif text-5xl sm:text-[56px] font-extrabold tracking-tight text-[#2D1B11] dark:text-[#FAF3EB] leading-[1.05]">
-              CafePulse
-            </h1>
-            <p className="text-sm sm:text-[15px] text-[#695548] dark:text-[#A89B91] pt-0.5">
-              A fresh start for your cafe.
-            </p>
-          </motion.div>
+      {/* Main Content */}
+      <main className="login-content">
+        {/* Left Studio Section */}
+        <section className="login-studio">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-accent">
+            A little craft. A lot of care.
+          </p>
+          <h1 className="tracking-tight">CafePulse</h1>
+          <p className="mt-3 text-base text-muted-foreground">
+            A fresh start for your cafe.
+          </p>
+          <div className="mt-2">
+            <LovableCafeGlass initialDrink="coffee" />
+          </div>
+        </section>
 
-          {/* Compact 3D Drinking Glass with Fine Leader Lines */}
-          <div className="relative w-full max-w-[430px] mx-auto lg:mx-0 flex items-center justify-center my-0">
-            <CafeGlass3D beverageType={beverageType} />
-            <IngredientLabels beverageType={beverageType} />
+        {/* Right Form Section */}
+        <section className="login-form">
+          <div className="mb-8">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent">
+              YOUR CAFE, CONNECTED
+            </p>
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground font-serif">
+              Welcome back
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Good things are brewing.
+            </p>
           </div>
 
-          {/* Segmented Coffee / Tea Selector & Circular Controls */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="w-full flex justify-center lg:justify-start pt-1 pl-0 lg:pl-10"
-          >
-            <BeverageSwitcher
-              beverageType={beverageType}
-              onSelectBeverage={setBeverageType}
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
+            <GlassInput
+              label="Email"
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              error={errors.email}
+              placeholder="admin@cafepulse.demo"
             />
-          </motion.div>
-        </div>
 
-        {/* RIGHT SECTION: Vertically Centered Welcome Back Login Form */}
-        <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
-          <LoginForm />
-        </div>
+            <GlassInput
+              label="Password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={errors.password}
+              placeholder="••••••••"
+            />
+
+            {errors.form && (
+              <p
+                role="alert"
+                className="rounded-2xl bg-destructive/12 px-4 py-3 text-sm font-medium text-destructive animate-fade-in border border-destructive/20"
+              >
+                {errors.form}
+              </p>
+            )}
+
+            <GlassButton
+              type="submit"
+              size="lg"
+              className="w-full bg-accent text-accent-foreground hover:brightness-105 shadow-glass cursor-pointer"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <LoaderCircle className="size-4 animate-spin" />
+              ) : (
+                <>
+                  <span>Sign in</span>
+                  <ArrowRight className="size-4" />
+                </>
+              )}
+            </GlassButton>
+          </form>
+
+          <p
+            onClick={handleQuickDemo}
+            className="mt-6 text-center text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            title="Click to fill demo account"
+          >
+            Accounts are created by your cafe admin.
+          </p>
+        </section>
       </main>
 
-      {/* Clean bottom padding matching target reference canvas */}
-      <div className="relative z-10 h-6" />
+      {/* Footer */}
+      <footer className="login-footer">
+        <span>Made for the everyday ritual.</span>
+        <span>CafePulse • Cafe management</span>
+      </footer>
     </div>
   );
 }
