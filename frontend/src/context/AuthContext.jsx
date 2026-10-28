@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
+import { firebaseAuthService } from '../services/firebaseServices';
 
 const AuthContext = createContext();
 
@@ -9,61 +9,24 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
   const [token, setToken] = useState(() => localStorage.getItem('cafepulse_access_token'));
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem('cafepulse_access_token');
-    localStorage.removeItem('cafepulse_refresh_token');
-    localStorage.removeItem('cafepulse_user');
+  const logout = useCallback(async () => {
+    await firebaseAuthService.logout();
     setUser(null);
     setToken(null);
   }, []);
 
-  // Sync session on mount
-  useEffect(() => {
-    const verifyAuth = async () => {
-      const storedToken = localStorage.getItem('cafepulse_access_token');
-      if (storedToken) {
-        try {
-          const { data } = await api.get('/auth/me');
-          setUser(data);
-          localStorage.setItem('cafepulse_user', JSON.stringify(data));
-        } catch {
-          // Token expired or invalid, api interceptor handled or clears
-          logout();
-        }
-      }
-      setIsLoading(false);
-    };
-
-    const handleUnauthorized = () => {
-      logout();
-    };
-
-    window.addEventListener('auth:unauthorized', handleUnauthorized);
-    verifyAuth();
-
-    return () => {
-      window.removeEventListener('auth:unauthorized', handleUnauthorized);
-    };
-  }, [logout]);
-
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password });
-    localStorage.setItem('cafepulse_access_token', data.access_token);
-    localStorage.setItem('cafepulse_refresh_token', data.refresh_token);
-
-    const userData = {
-      id: data.user_id,
-      email: data.email,
-      full_name: data.full_name,
-      role: data.role,
-    };
-    localStorage.setItem('cafepulse_user', JSON.stringify(userData));
-
-    setToken(data.access_token);
-    setUser(userData);
-    return userData;
+    setIsLoading(true);
+    try {
+      const userData = await firebaseAuthService.login(email, password);
+      setUser(userData);
+      setToken(localStorage.getItem('cafepulse_access_token'));
+      return userData;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isAdmin = user?.role === 'admin';
