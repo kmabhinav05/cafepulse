@@ -507,7 +507,7 @@ export default function MenuPage() {
                       </span>
                       <div className="text-right">
                         <span className="font-serif text-lg font-bold text-espresso-900 dark:text-cream-50">
-                          ${item.base_price.toFixed(2)}
+                          ₹{item.base_price.toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -547,7 +547,7 @@ export default function MenuPage() {
                             className="text-[10.5px] px-2 py-0.5 rounded-md bg-espresso-900/5 dark:bg-white/10 text-espresso-900/80 dark:text-cream-100 font-medium"
                           >
                             {s.name}
-                            {s.price_adjustment > 0 && ` (+$${s.price_adjustment.toFixed(2)})`}
+                            {s.price_adjustment > 0 && ` (+₹${s.price_adjustment.toFixed(2)})`}
                           </span>
                         ))}
                       </div>
@@ -651,7 +651,7 @@ export default function MenuPage() {
 
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-espresso-900/80 dark:text-cream-200/80">
-                Base Price ($) *
+                Base Price (₹) *
               </label>
               <GlassInput
                 type="number"

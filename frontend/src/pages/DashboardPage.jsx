@@ -81,18 +81,18 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2">
             <TrafficLights />
             <span className="text-xs font-mono text-espresso-900/50 dark:text-cream-200/50 uppercase ml-2">
-              CafePulse Commercial 2.0 • Online & POS Active
+              CafePulse Kerala • Kochi & Wayanad Storefront Active
             </span>
           </div>
           <h2 className="font-serif text-2xl sm:text-3xl font-bold text-espresso-900 dark:text-cream-50">
-            Welcome back, {user?.full_name}! ☕
+            Namaskaram, {user?.full_name}! ☕🌴
           </h2>
           <p className="text-sm text-espresso-900/70 dark:text-cream-200/70 max-w-xl">
             Operating as{' '}
             <span className="font-semibold text-terracotta-500">
               {isAdmin ? 'Store Manager (Admin)' : 'Head Barista (Staff)'}
             </span>
-            . Customer online ordering is actively routing tickets into the kitchen queue.
+            . Live orders for Wayanad Filter Kaapi, Sulaimani & Chayakada snacks are routing into the kitchen.
           </p>
         </div>
 
@@ -260,7 +260,7 @@ export default function DashboardPage() {
                   <td className="py-3 px-3 text-espresso-900/70 dark:text-cream-200/70">
                     {o.items?.map((i) => `${i.quantity}x ${i.item_name}`).join(', ')}
                   </td>
-                  <td className="py-3 px-3 font-bold">${o.total.toFixed(2)}</td>
+                  <td className="py-3 px-3 font-bold">₹{o.total.toFixed(2)}</td>
                   <td className="py-3 px-3">
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${

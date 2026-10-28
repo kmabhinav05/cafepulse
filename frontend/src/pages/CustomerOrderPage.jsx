@@ -169,7 +169,7 @@ export default function CustomerOrderPage() {
     }, 0);
   }, [cart]);
 
-  const taxAmount = useMemo(() => cartSubtotal * 0.0825, [cartSubtotal]);
+  const taxAmount = useMemo(() => cartSubtotal * 0.05, [cartSubtotal]);
   const cartTotal = useMemo(() => cartSubtotal + taxAmount, [cartSubtotal, taxAmount]);
 
   // Submit Order to Kitchen
@@ -278,13 +278,13 @@ export default function CustomerOrderPage() {
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-[11px] font-bold tracking-wider text-caramel-400 uppercase">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>CAFE EXPRESS PICKUP</span>
+              <span>KOCHI & WAYANAD ARTISAN CAFE • KERALA</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Order Ahead & Sip Fresh
+              Order Fresh Kerala Kaapi & Chayakada Bites
             </h1>
             <p className="text-sm text-cream-200/70 max-w-xl">
-              Handcrafted espresso, iced matcha, and slow-steeped teas brewed precisely for your pickup.
+              Authentic Wayanad filter coffee, fragrant Malabar Sulaimani, hot Pazham Pori, and Kochi Kulukki Sarbath prepared fresh.
             </p>
           </div>
 
@@ -433,7 +433,7 @@ export default function CustomerOrderPage() {
                       {item.category_name}
                     </span>
                     <span className="font-serif text-lg font-bold text-espresso-900 dark:text-cream-50">
-                      ${item.base_price.toFixed(2)}
+                      ₹{item.base_price.toFixed(2)}
                     </span>
                   </div>
 
@@ -509,7 +509,7 @@ export default function CustomerOrderPage() {
                     >
                       <span>{s.name}</span>
                       <span>
-                        {s.price_adjustment > 0 ? `+$${s.price_adjustment.toFixed(2)}` : 'Standard'}
+                        {s.price_adjustment > 0 ? `+₹${s.price_adjustment.toFixed(2)}` : 'Standard'}
                       </span>
                     </button>
                   ))}
@@ -540,7 +540,7 @@ export default function CustomerOrderPage() {
                         <span>{opt.name}</span>
                         {opt.price_adjustment > 0 && (
                           <span className="text-[10px] text-espresso-900/60 dark:text-cream-200/60">
-                            +${opt.price_adjustment.toFixed(2)}
+                            +₹{opt.price_adjustment.toFixed(2)}
                           </span>
                         )}
                       </button>
@@ -646,7 +646,7 @@ export default function CustomerOrderPage() {
 
                         <div className="text-right space-y-1 shrink-0">
                           <span className="font-bold text-sm text-cream-50 block">
-                            ${(entry.unit_price * entry.quantity).toFixed(2)}
+                            ₹{(entry.unit_price * entry.quantity).toFixed(2)}
                           </span>
                           <button
                             onClick={() => setCart((prev) => prev.filter((_, i) => i !== idx))}
@@ -690,15 +690,15 @@ export default function CustomerOrderPage() {
                   <div className="space-y-1 text-xs text-cream-200/70 border-t border-white/10 pt-3">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
-                      <span>${cartSubtotal.toFixed(2)}</span>
+                      <span>₹{cartSubtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Tax (8.25%)</span>
-                      <span>${taxAmount.toFixed(2)}</span>
+                      <span>GST (5%)</span>
+                      <span>₹{taxAmount.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between font-bold text-base text-cream-50 pt-1">
                       <span>Total</span>
-                      <span className="text-caramel-400">${cartTotal.toFixed(2)}</span>
+                      <span className="text-caramel-400">₹{cartTotal.toFixed(2)}</span>
                     </div>
                   </div>
 
@@ -711,7 +711,7 @@ export default function CustomerOrderPage() {
                       <RefreshCw className="w-4 h-4 animate-spin" />
                     ) : (
                       <>
-                        <span>Send to Barista • ${cartTotal.toFixed(2)}</span>
+                        <span>Send to Barista • ₹{cartTotal.toFixed(2)}</span>
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}

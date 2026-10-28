@@ -233,7 +233,7 @@ export const firebaseMenuService = {
 export const firebaseOrderService = {
   async createOrder(orderData) {
     await ensureFirestoreSeeded();
-    const orderNumber = `CP-${Math.floor(1000 + Math.random() * 9000)}`;
+    const orderNumber = `KL-${Math.floor(1000 + Math.random() * 9000)}`;
     const fullOrder = {
       ...orderData,
       order_number: orderNumber,

@@ -87,7 +87,7 @@ export default function InventoryPage() {
       addToast({
         type: 'success',
         title: 'Inventory Restocked',
-        message: `Added +${delta} ${restockItem.unit} to ${restockItem.name}.`,
+        message: `Added +₹{delta} ${restockItem.unit} to ${restockItem.name}.`,
       });
       setRestockItem(null);
       setRestockAmount('');

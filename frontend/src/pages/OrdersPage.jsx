@@ -259,7 +259,7 @@ export default function OrdersPage() {
                   {order.items?.map((i) => `${i.quantity}x ${i.item_name}`).join(', ')}
                 </div>
                 <div className="flex justify-between items-center text-[10px] text-espresso-900/50 dark:text-cream-200/50 pt-1 border-t border-white/10">
-                  <span>${order.total.toFixed(2)}</span>
+                  <span>₹{order.total.toFixed(2)}</span>
                   <span className="text-sage-500 font-semibold">Completed</span>
                 </div>
               </GlassCard>
@@ -302,7 +302,7 @@ function OrderKanbanCard({ order, actionLabel, actionColor, onAction }) {
         <div className="text-right">
           <span className="text-[10.5px] font-bold text-caramel-400 block">{order.pickup_time}</span>
           <span className="text-[10px] text-espresso-900/50 dark:text-cream-200/50">
-            ${order.total.toFixed(2)}
+            ₹{order.total.toFixed(2)}
           </span>
         </div>
       </div>

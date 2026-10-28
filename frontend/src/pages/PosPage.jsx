@@ -115,7 +115,7 @@ export default function PosPage() {
     return cart.reduce((acc, item) => acc + item.unit_price * item.quantity, 0);
   }, [cart]);
 
-  const tax = useMemo(() => Math.max(0, (subtotal - discountAmount) * 0.0825), [subtotal, discountAmount]);
+  const tax = useMemo(() => Math.max(0, (subtotal - discountAmount) * 0.05), [subtotal, discountAmount]);
   const total = useMemo(() => Math.max(0, subtotal - discountAmount + tax), [subtotal, discountAmount, tax]);
 
   // Submit POS Order
@@ -238,7 +238,7 @@ export default function PosPage() {
 
                 <div className="flex items-center justify-between pt-2 border-t border-white/10">
                   <span className="font-bold text-sm text-espresso-900 dark:text-cream-50">
-                    ${item.base_price.toFixed(2)}
+                    ₹{item.base_price.toFixed(2)}
                   </span>
                   <span className="w-6 h-6 rounded-full bg-caramel-500/20 text-caramel-400 flex items-center justify-center group-hover:bg-caramel-500 group-hover:text-espresso-950 transition-colors">
                     <Plus className="w-3.5 h-3.5" />
@@ -319,7 +319,7 @@ export default function PosPage() {
                         {item.item_name}
                       </span>
                       <span className="text-[11px] text-espresso-900/60 dark:text-cream-200/60">
-                        ${item.unit_price.toFixed(2)} each
+                        ₹{item.unit_price.toFixed(2)} each
                       </span>
                     </div>
 
@@ -354,30 +354,30 @@ export default function PosPage() {
               <div className="space-y-1 text-xs text-espresso-900/70 dark:text-cream-200/70">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toFixed(2)}</span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-green-500">
                     <span>Discount</span>
-                    <span>-${discountAmount.toFixed(2)}</span>
+                    <span>-₹{discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span>Tax (8.25%)</span>
-                  <span>${tax.toFixed(2)}</span>
+                  <span>GST (5%)</span>
+                  <span>₹{tax.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-bold text-lg text-espresso-900 dark:text-cream-50 pt-1 border-t border-white/10">
                   <span>Total</span>
-                  <span className="text-terracotta-500 dark:text-caramel-400">${total.toFixed(2)}</span>
+                  <span className="text-terracotta-500 dark:text-caramel-400">₹{total.toFixed(2)}</span>
                 </div>
               </div>
 
               {/* Payment Method Selector */}
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { id: 'card', label: 'Card', icon: CreditCard },
-                  { id: 'cash', label: 'Cash', icon: Banknote },
-                  { id: 'apple_pay', label: 'Wallet', icon: Smartphone },
+                  { id: 'upi', label: 'UPI / QR', icon: Smartphone },
+                  { id: 'cash', label: 'Cash (₹)', icon: Banknote },
+                  { id: 'card', label: 'RuPay/Card', icon: CreditCard },
                 ].map((m) => {
                   const Icon = m.icon;
                   return (
@@ -405,7 +405,7 @@ export default function PosPage() {
                 onClick={handleCheckout}
                 className="w-full h-12 rounded-2xl bg-[#DCA466] hover:bg-[#E5AF73] text-[#241409] font-bold text-sm shadow-xl flex items-center justify-center gap-2 active:scale-98 transition-all disabled:opacity-40 cursor-pointer"
               >
-                <span>Charge ${total.toFixed(2)}</span>
+                <span>Charge ₹{total.toFixed(2)}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -438,12 +438,12 @@ export default function PosPage() {
                   <span>
                     {i.quantity}x {i.item_name}
                   </span>
-                  <span className="font-bold">${i.total_price.toFixed(2)}</span>
+                  <span className="font-bold">₹{i.total_price.toFixed(2)}</span>
                 </div>
               ))}
               <div className="pt-2 border-t border-white/10 flex justify-between font-bold">
                 <span>Total Paid</span>
-                <span>${completedOrder.total.toFixed(2)}</span>
+                <span>₹{completedOrder.total.toFixed(2)}</span>
               </div>
             </div>
 

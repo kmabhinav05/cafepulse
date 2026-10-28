@@ -54,3 +54,16 @@ export function calculateTotal({
     total,
   };
 }
+
+/**
+ * Format amounts into Indian Rupee format (₹)
+ */
+export function formatINR(amount = 0) {
+  const num = Number(amount) || 0;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 2,
+  }).format(num);
+}
+

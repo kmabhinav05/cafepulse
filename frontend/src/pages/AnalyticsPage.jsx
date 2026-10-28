@@ -151,7 +151,7 @@ export default function AnalyticsPage() {
                   Hourly Sales & Rush Distribution
                 </h3>
                 <p className="text-xs text-espresso-900/60 dark:text-cream-200/60">
-                  Gross revenue ($) by time of day.
+                  Gross revenue (₹) by time of day.
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function AnalyticsPage() {
                       color: '#FAF3EB',
                       fontSize: '12px',
                     }}
-                    formatter={(val) => [`$${val}`, 'Revenue']}
+                    formatter={(val) => [`₹${val}`, 'Revenue']}
                   />
                   <Bar dataKey="revenue" fill="#DE7938" radius={[6, 6, 0, 0]} />
                 </BarChart>
@@ -202,7 +202,7 @@ export default function AnalyticsPage() {
                     dataKey="value"
                   >
                     {channelData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={CHANNEL_COLORS[index % CHANNEL_COLORS.length]} />
+                      <Cell key={`cell-₹{index}`} fill={CHANNEL_COLORS[index % CHANNEL_COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip
